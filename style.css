@@ -1,8 +1,101 @@
-body .container .row .app-header {
+.toggleFlag, body .container .card-list {
+  /* Hide default HTML checkbox */
+  /* The slider */
+  /* Rounded sliders */
+}
+
+.toggleFlag .switch, body .container .card-list .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggleFlag .switch input, body .container .card-list .switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.toggleFlag .slider, body .container .card-list .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.toggleFlag .slider:before, body .container .card-list .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.toggleFlag input:checked + .slider, body .container .card-list input:checked + .slider {
+  background-color: #2196F3;
+}
+
+.toggleFlag input:focus + .slider, body .container .card-list input:focus + .slider {
+  -webkit-box-shadow: 0 0 1px #2196F3;
+          box-shadow: 0 0 1px #2196F3;
+}
+
+.toggleFlag input:checked + .slider:before, body .container .card-list input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+.toggleFlag .slider.round, body .container .card-list .slider.round {
+  border-radius: 34px;
+}
+
+.toggleFlag .slider.round:before, body .container .card-list .slider.round:before {
+  border-radius: 50%;
+}
+
+body .container .app-header {
   margin-top: 20px;
 }
 
-body .container .row .app-header a {
+body .container .app-header a {
   color: #999;
+  margin-right: 20px;
+}
+
+body .container .card-list {
+  margin-top: 20px;
+}
+
+body .container .card-list .card {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 280px;
+}
+
+body .container .card-list .card .card-body {
+  width: 70%;
+}
+
+body .container .card-list .card .toggle-card {
+  width: 30%;
+  text-align: center;
+  margin-top: 20px;
 }
 /*# sourceMappingURL=style.css.map */
