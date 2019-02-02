@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAEA,AAIW,IAJP,CAEA,UAAU,CACN,IAAI,CACD,WAAW,CAAA;EACP,UAAU,EAAE,IAAI;CAInB;;AATZ,AAMe,IANX,CAEA,UAAU,CACN,IAAI,CACD,WAAW,CAEP,CAAC,CAAA;EACD,KAAK,ECTT,IAAI;CDUC",
+    "sources": [
+        "style.scss",
+        "const.scss"
+    ],
+    "names": [],
+    "file": "style.css"
+}
