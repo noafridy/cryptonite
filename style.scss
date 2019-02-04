@@ -8,24 +8,40 @@ body {
                 color: $colorNav;
                 margin-right: $margin20;
             }
+              @media only screen and (max-width: 575px) {
+                //margin-left: $margin20;
+                //margin: $margin20 auto;
+                text-align: center;
+               // max-width: 410px;
+            }
+        }
         }
         .card-list {
+            display: flex;
+            flex-wrap: wrap;
             margin-top: $margin20;
-          @extend .toggleFlag;
-          .card{
-              display: flex;
-              flex-wrap: wrap;
-              flex-direction: row;
-              width: 280px;
-              .card-body{
-                  width: 70%;
-              }
-              .toggle-card{
-                  width: 30%;
-                  text-align: center;
-                  margin-top: $margin20;
-              }
-          }
+            @extend .toggleFlag;
+            .card {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                width: 280px;
+                margin-right: $margin20;
+                margin-bottom: $margin20;
+                .card-body {
+                    width: 70%;
+                }
+                .toggle-card {
+                    width: 30%;
+                    text-align: center;
+                    margin-top: $margin20;
+                }
+            } 
+              @media only screen and (max-width: 575px) {
+                flex-direction: column;
+               // text-align: center;
+               margin: 20px auto;
+               
+            }
         }
     }
-}
