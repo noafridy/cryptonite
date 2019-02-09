@@ -106,6 +106,11 @@ body .card-list .card .card-body {
   width: 70%;
 }
 
+body .card-list .card .card-body .collapse {
+  margin-top: 10px;
+  width: 200px;
+}
+
 body .card-list .card .toggle-card {
   width: 30%;
   text-align: center;
