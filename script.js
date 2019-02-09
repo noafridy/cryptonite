@@ -1,41 +1,53 @@
-const objCrypto = {};
-let cryptoData = [];
+let objCrypto = {};
 
 function backup() {
-    if (localStorage.getItem("obj") !== null) {
+    if (localStorage.getItem("objCrypto") !== null) {
         objCrypto = JSON.parse(localStorage.getItem("objCrypto"));
         console.log(objCrypto);    //for check
     }
 }
+function saveObjCrypto() {
+    localStorage.setItem('objCrypto', JSON.stringify(objCrypto));
+}
 
 $(document).ready(() => {
+
     backup();
     coinList();
-
-    $(".progress-bar").append(
-        `<div class="progress">
-                 <div class="progress-bar progress-bar-striped progress-bar-animated"
-                  role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%"></div>
-         </div>`);
-
+    
     $("body").on("click", ".more-info-coin", (event) => {
-        debugger;
-        const coinId = event.target.dataset.id;
-        getCoinDetails(coinId);
+        if ($(event.target).attr("aria-expanded") == "false") {
+            const coinId = event.target.dataset.id;
+            getCoinDetails(coinId);
+        }
     })
 }
 )
 
+function updateProgressBar(widthBar) {
+    const $bar = $(".progress-bar.progress-bar-striped.progress-bar-animated");
+    const $progress = $(".progress");
+    if (widthBar === "0") {
+        $progress.css("display", "none");
+    }
+    else {
+        $progress.css("display", "flex");
+    }
+    $bar.css("width", `${widthBar}%`);
+}
+
 function coinList() {
+    updateProgressBar("100");
     $.ajax({
         type: "get",
         url: "https://api.coingecko.com/api/v3/coins/list",
         success: (response) => {
-            cryptoData = response.slice(0, 10);
+            setTimeout(() => { updateProgressBar("0") }, 500);
+            const cryptoData = response.slice(0, 10);
             console.log(response.slice(0, 10));
             // console.log(this.cryptoData);
             for (let i = 0; i < 10; i++) {
-                coinView(i);
+                coinView(cryptoData[i]);
             }
         },
         error: (error) => {
@@ -44,21 +56,21 @@ function coinList() {
     });
 }
 
-function coinView(i) {
+function coinView(cryptoData) {
     $(".card-list").append(`<div class="col"> 
             <div class="card">
             <div class="card-body">
-            <h5 class="card-title">${cryptoData[i].symbol}</h5>
-            <h6 class="card-subtitle mb-2 text-muted">${cryptoData[i].name}</h6>
+            <h5 class="card-title">${cryptoData.symbol}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">${cryptoData.name}</h6>
 
             <button class="btn btn-primary more-info-coin" type="button" data-toggle="collapse" 
-                data-id=${cryptoData[i].id}
-                data-target=#crypto_${cryptoData[i].id}
-                aria-expanded="false" aria-controls=crypto_${cryptoData[i].id}>
+                data-id=${cryptoData.id}
+                data-target=#crypto_${cryptoData.id}
+                aria-expanded="false" aria-controls=crypto_${cryptoData.id}>
                 More info
             </button>
 
-            <div class="collapse" id=crypto_${cryptoData[i].id}>
+            <div class="collapse" id=crypto_${cryptoData.id}>
             <div class="card card-body" >
           
             </div>
@@ -74,22 +86,62 @@ function coinView(i) {
             </div>
             </div>`);
 }
+//const objCrypto = {};
 
-function getCoinDetails(coinId) {
-    $.ajax({
-        type: "get",
-        url: `https://api.coingecko.com/api/v3/coins/${coinId}`,
-        success: (response) => {
-            $(`#crypto_${coinId}`).html(`<img src=${response.image.small}/> <br/> 
-             <div> ${((response.market_data.current_price.usd).toFixed(5))}$ </div><br/> 
-             <div> ${((response.market_data.current_price.eur).toFixed(5))}€ </div><br/> 
-             <div> ${((response.market_data.current_price.ils).toFixed(5))}₪ </div>`);
-            console.log(response.image.small);  ////for check
-        },
-        error: (error) => {
-            console.log(JSON.stringify(error.status));
-        }
+function createObj(response) {
+    return ({
+        image: response.image.small,
+        currentUsd: response.market_data.current_price.usd,
+        currentEur: response.market_data.current_price.eur,
+        currentIls: response.market_data.current_price.ils,
+        timeCreate: new Date().getTime()
     });
 }
+
+function checkTime(timeStr) {
+    const twoMin = 1000 * 60 * 2;
+    return (new Date().getTime() - timeStr < twoMin) ? false : true;
+}
+
+function callAjax(coinId) {
+    return (!objCrypto[coinId] || ((objCrypto[coinId]) && (checkTime(objCrypto[coinId].timeCreate))))
+}
+
+function showMoreInfo(coinId) {
+    $(`#crypto_${coinId}`).html(`<img src=${objCrypto[coinId].image}/> <br/> 
+    <div> ${((objCrypto[coinId].currentUsd).toFixed(5))}$ </div><br/> 
+    <div> ${((objCrypto[coinId].currentEur).toFixed(5))}€ </div><br/> 
+    <div> ${((objCrypto[coinId].currentIls).toFixed(5))}₪ </div>`);
+}
+
+function getCoinDetails(coinId) {
+    if (callAjax(coinId)) {
+        updateProgressBar("100");
+        $.ajax({
+            type: "get",
+            url: `https://api.coingecko.com/api/v3/coins/${coinId}`,
+            success: (response) => {
+                //updateProgressBar("100");
+                setTimeout(() => { updateProgressBar("0") }, 500);
+                objCrypto[coinId] = (createObj(response));
+                saveObjCrypto();
+                console.log(objCrypto[coinId]);   ////for check
+                showMoreInfo(coinId);
+                console.log(response.image.small);  ////for check
+
+            },
+            error: (error) => {
+                updateProgressBar("100");
+                setTimeout(() => { updateProgressBar("0") }, 500);
+                console.log(JSON.stringify(error.status));
+            }
+        });
+    }
+    else {
+        showMoreInfo(coinId);
+    }
+
+}
+
 
 

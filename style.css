@@ -126,4 +126,8 @@ body .card-list .card .toggle-card {
     margin: 20px auto;
   }
 }
+
+body .progress {
+  display: none;
+}
 /*# sourceMappingURL=style.css.map */
