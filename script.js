@@ -1,4 +1,5 @@
 let objCrypto = {};
+let favoritesCoin = [];
 
 function backup() {
     if (localStorage.getItem("objCrypto") !== null) {
@@ -10,19 +11,112 @@ function saveObjCrypto() {
     localStorage.setItem('objCrypto', JSON.stringify(objCrypto));
 }
 
-$(document).ready(() => {
+function toggleOff(event) {
+    $(event.target).prop('checked',false)
+}
 
+$(document).ready(() => {
     backup();
     coinList();
-    
+
     $("body").on("click", ".more-info-coin", (event) => {
         if ($(event.target).attr("aria-expanded") == "false") {
             const coinId = event.target.dataset.id;
             getCoinDetails(coinId);
         }
     })
-}
-)
+
+    $(".nav-about").on("click", () => {
+        console.log("about"); //for check
+        updateProgressBar("100");
+        $.ajax({
+            type: "get",
+            url: "about.html",
+            success: (response) => {
+                setTimeout(() => { updateProgressBar("0") }, 500);
+                $(".card-list").empty();
+                $(".card-list").append(response);
+            },
+            error: (error) => {
+                alert("The page does not exist");
+                console.log(JSON.stringify(error.status));
+            }
+        });
+    })
+
+    $(".nav-home").on("click", () => {
+        console.log("about"); //for check
+        updateProgressBar("100");
+        $.ajax({
+            type: "get",
+            url: "index.html",
+            success: (response) => {
+                console.log(response);
+                setTimeout(() => { updateProgressBar("0") }, 500);
+                $(".card-list").empty();
+                $(".card-list").append(coinList());
+            },
+            error: (error) => {
+                alert("The page does not exist");
+                console.log(JSON.stringify(error.status));
+            }
+        });
+    })
+
+    $("body").on("click", ".modal-content .save-changes", (event) => {
+        const toggleList = $('.modal-body input[type="checkbox"]').filter((key,value) => {
+            return ($(value).prop('checked') === false);
+        });
+
+        for(let index = 0; index < toggleList.length; index++ ) {
+            // 1. update toggle array
+            const coinId = toggleList[index].dataset.id;
+            const i = favoritesCoin.indexOf(coinId);
+            favoritesCoin.splice(i, 1);
+            // 2. update dom toggles
+            $(`.card-list .toggle-card input[type="checkbox"][data-id="${coinId}"]`).prop('checked',false);
+            // 3. close modal
+            $('#favoritModal').modal('hide');
+
+        }
+
+    });
+
+    $("body").on("click", ".card-list input[type='checkbox']", (event) => {
+        let Checkbox = event.target;
+        const coinId = Checkbox.dataset.id;
+        const isModalOpen = $('#favoritModal').hasClass('show');
+
+        // if the number of favorite coins is  < 5
+        // add coin id to favorite.
+        if (favoritesCoin.length < 5) {
+            favoritesCoin.push(coinId);
+        } else {
+            toggleOff(event);
+            if (isModalOpen) return;
+
+            // append all coins & toggles to modal
+            $('.modal-body').html(
+                favoritesCoin.map(item => {
+                    return(
+                        `<div class="line-item">
+                            <div>${item}</div>
+                            <div class="toggle-card">
+                                <label class="switch">
+                                    <input type="checkbox" data-id=${item} checked>
+                                        <span class="slider round"></span>
+                                </label>
+                            </div>
+                        </div>`
+                    );
+                })
+            )
+            // open modal and ask user to un-check one of the other toggles
+            $('#favoritModal').modal('show');
+        }
+    })
+
+})  //end $(document).ready
 
 function updateProgressBar(widthBar) {
     const $bar = $(".progress-bar.progress-bar-striped.progress-bar-animated");
@@ -44,8 +138,7 @@ function coinList() {
         success: (response) => {
             setTimeout(() => { updateProgressBar("0") }, 500);
             const cryptoData = response.slice(0, 10);
-            console.log(response.slice(0, 10));
-            // console.log(this.cryptoData);
+            console.log(response.slice(0, 10)); //for check
             for (let i = 0; i < 10; i++) {
                 coinView(cryptoData[i]);
             }
@@ -79,14 +172,13 @@ function coinView(cryptoData) {
             </div>
             <div class="toggle-card"> 
             <label class="switch">
-            <input type="checkbox">
+            <input type="checkbox" data-id=${cryptoData.id}>
             <span class="slider round"></span>
             </label>
             </div>
             </div>
             </div>`);
 }
-//const objCrypto = {};
 
 function createObj(response) {
     return ({
@@ -96,6 +188,31 @@ function createObj(response) {
         currentIls: response.market_data.current_price.ils,
         timeCreate: new Date().getTime()
     });
+}
+
+function getCoinDetails(coinId) {
+    if (callAjax(coinId)) {
+        updateProgressBar("100");
+        $.ajax({
+            type: "get",
+            url: `https://api.coingecko.com/api/v3/coins/${coinId}`,
+            success: (response) => {
+                setTimeout(() => { updateProgressBar("0") }, 500);
+                objCrypto[coinId] = (createObj(response));
+                saveObjCrypto();
+                console.log(objCrypto[coinId]);   ////for check
+                showMoreInfo(coinId);
+            },
+            error: (error) => {
+                updateProgressBar("100");
+                setTimeout(() => { updateProgressBar("0") }, 500);
+                console.log(JSON.stringify(error.status));
+            }
+        });
+    }
+    else {
+        showMoreInfo(coinId);
+    }
 }
 
 function checkTime(timeStr) {
@@ -113,35 +230,8 @@ function showMoreInfo(coinId) {
     <div> ${((objCrypto[coinId].currentEur).toFixed(5))}€ </div><br/> 
     <div> ${((objCrypto[coinId].currentIls).toFixed(5))}₪ </div>`);
 }
+// function graphFavoritesCoin(coinId){
 
-function getCoinDetails(coinId) {
-    if (callAjax(coinId)) {
-        updateProgressBar("100");
-        $.ajax({
-            type: "get",
-            url: `https://api.coingecko.com/api/v3/coins/${coinId}`,
-            success: (response) => {
-                //updateProgressBar("100");
-                setTimeout(() => { updateProgressBar("0") }, 500);
-                objCrypto[coinId] = (createObj(response));
-                saveObjCrypto();
-                console.log(objCrypto[coinId]);   ////for check
-                showMoreInfo(coinId);
-                console.log(response.image.small);  ////for check
-
-            },
-            error: (error) => {
-                updateProgressBar("100");
-                setTimeout(() => { updateProgressBar("0") }, 500);
-                console.log(JSON.stringify(error.status));
-            }
-        });
-    }
-    else {
-        showMoreInfo(coinId);
-    }
-
-}
-
+// }
 
 

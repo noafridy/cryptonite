@@ -1,23 +1,23 @@
-.toggleFlag, body .card-list {
+.toggleFlag, body .card-list, body .modal-body {
   /* Hide default HTML checkbox */
   /* The slider */
   /* Rounded sliders */
 }
 
-.toggleFlag .switch, body .card-list .switch {
+.toggleFlag .switch, body .card-list .switch, body .modal-body .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
 
-.toggleFlag .switch input, body .card-list .switch input {
+.toggleFlag .switch input, body .card-list .switch input, body .modal-body .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.toggleFlag .slider, body .card-list .slider {
+.toggleFlag .slider, body .card-list .slider, body .modal-body .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -29,7 +29,7 @@
   transition: .4s;
 }
 
-.toggleFlag .slider:before, body .card-list .slider:before {
+.toggleFlag .slider:before, body .card-list .slider:before, body .modal-body .slider:before {
   position: absolute;
   content: "";
   height: 26px;
@@ -41,26 +41,42 @@
   transition: .4s;
 }
 
-.toggleFlag input:checked + .slider, body .card-list input:checked + .slider {
+.toggleFlag input:checked + .slider, body .card-list input:checked + .slider, body .modal-body input:checked + .slider {
   background-color: #2196F3;
 }
 
-.toggleFlag input:focus + .slider, body .card-list input:focus + .slider {
+.toggleFlag input:focus + .slider, body .card-list input:focus + .slider, body .modal-body input:focus + .slider {
   -webkit-box-shadow: 0 0 1px #2196F3;
           box-shadow: 0 0 1px #2196F3;
 }
 
-.toggleFlag input:checked + .slider:before, body .card-list input:checked + .slider:before {
+.toggleFlag input:checked + .slider:before, body .card-list input:checked + .slider:before, body .modal-body input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-.toggleFlag .slider.round, body .card-list .slider.round {
+.toggleFlag .slider.round, body .card-list .slider.round, body .modal-body .slider.round {
   border-radius: 34px;
 }
 
-.toggleFlag .slider.round:before, body .card-list .slider.round:before {
+.toggleFlag .slider.round:before, body .card-list .slider.round:before, body .modal-body .slider.round:before {
   border-radius: 50%;
+}
+
+body .container .pageIconRow {
+  border-bottom: 1px solid #459636;
+}
+
+body .container .pageIconRow .pageIcon {
+  font-size: 40px;
+  font-family: cursive, Arial, Helvetica, sans-serif;
+  color: #459636;
+}
+
+body .container .pageIconRow #cryptoniteLogo {
+  width: 80px;
+  height: 80px;
+  margin-left: 880px;
 }
 
 body .container .app-header {
@@ -70,6 +86,7 @@ body .container .app-header {
 body .container .app-header a {
   color: #999;
   margin-right: 20px;
+  cursor: pointer;
 }
 
 @media only screen and (max-width: 575px) {
@@ -129,5 +146,20 @@ body .card-list .card .toggle-card {
 
 body .progress {
   display: none;
+}
+
+body .modal-body .line-item {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 /*# sourceMappingURL=style.css.map */

@@ -1,0 +1,41 @@
+@import "const.scss";
+
+body{
+    .container-about{
+        .aboutMe{
+            width: 1140px;
+            border: 1px solid $colorIcon;
+            display: flex;
+            justify-content: space-around;
+            margin-top: $margin20;
+            margin-bottom: $margin20;
+            border-radius: $borderRadius;
+           img{
+               height: 300px;
+               margin-top: $margin20;
+               margin-bottom: $margin20;
+           }
+           .about-me-data{
+               h3{
+                margin-top: $margin20;
+                font-family: cursive, Arial, Helvetica, sans-serif;
+                color: $colorIcon;
+               }
+           }
+        }
+        .project-description{
+            border: 1px solid $colorIcon;
+            display: flex;
+            justify-content: space-around;
+            margin-top: $margin20;
+            margin-bottom: $margin20;
+            border-radius: $borderRadius;
+            h3{
+                margin-top: $margin20;
+                font-family: cursive, Arial, Helvetica, sans-serif;
+                color: $colorIcon;
+               }
+        }
+    }
+
+}
