@@ -1,43 +1,31 @@
-body .container-about .aboutMe {
-  width: 1140px;
-  border: 1px solid #459636;
+body .container-about {
+  background-color: #f7f8fd;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
 }
 
-body .container-about .aboutMe img {
-  height: 300px;
-  margin-top: 20px;
-  margin-bottom: 20px;
+body .container-about .aboutMe .col-img {
+  padding-left: 0;
 }
 
-body .container-about .aboutMe .about-me-data h3 {
+body .container-about .aboutMe .col-img img {
+  width: 100%;
+}
+
+body .container-about .aboutMe .about-data .about-me-data .about-title {
+  color: #85a6c7;
   margin-top: 20px;
   font-family: cursive, Arial, Helvetica, sans-serif;
-  color: #459636;
 }
 
-body .container-about .project-description {
-  border: 1px solid #459636;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-}
-
-body .container-about .project-description h3 {
+body .container-about .aboutMe .about-data .project-description .description-title {
+  color: #85a6c7;
   margin-top: 20px;
   font-family: cursive, Arial, Helvetica, sans-serif;
-  color: #459636;
 }
 /*# sourceMappingURL=about.css.map */

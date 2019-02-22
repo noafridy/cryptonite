@@ -1,41 +1,33 @@
 @import "const.scss";
-
-body{
-    .container-about{
-        .aboutMe{
-            width: 1140px;
-            border: 1px solid $colorIcon;
-            display: flex;
-            justify-content: space-around;
-            margin-top: $margin20;
-            margin-bottom: $margin20;
-            border-radius: $borderRadius;
-           img{
-               height: 300px;
-               margin-top: $margin20;
-               margin-bottom: $margin20;
-           }
-           .about-me-data{
-               h3{
-                margin-top: $margin20;
-                font-family: cursive, Arial, Helvetica, sans-serif;
-                color: $colorIcon;
-               }
-           }
-        }
-        .project-description{
-            border: 1px solid $colorIcon;
-            display: flex;
-            justify-content: space-around;
-            margin-top: $margin20;
-            margin-bottom: $margin20;
-            border-radius: $borderRadius;
-            h3{
-                margin-top: $margin20;
-                font-family: cursive, Arial, Helvetica, sans-serif;
-                color: $colorIcon;
-               }
+body {
+    .container-about {
+        background-color: #f7f8fd;
+        display: flex;
+        flex-flow: row;
+        .aboutMe {
+            .col-img {
+                padding-left: 0;
+                
+                img {
+                    width: 100%;
+                }
+            }
+            .about-data {
+                .about-me-data {
+                    .about-title {
+                        color: #85a6c7;
+                        margin-top: 20px;
+                        font-family: cursive, Arial, Helvetica, sans-serif;
+                    }
+                }
+                .project-description {
+                    .description-title {
+                        color: #85a6c7;
+                        margin-top: 20px;
+                        font-family: cursive, Arial, Helvetica, sans-serif;
+                    }
+                }
+            }
         }
     }
-
 }

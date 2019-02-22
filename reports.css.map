@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,kBAAkB,CAAC;EACf,KAAK,EAAE,IAAI;CACd",
+    "sources": [
+        "reports.scss"
+    ],
+    "names": [],
+    "file": "reports.css"
+}

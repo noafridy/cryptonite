@@ -1,23 +1,23 @@
-.toggleFlag, body .card-list, body .modal-body {
+.toggleFlag, body .container-page, body .modal-body {
   /* Hide default HTML checkbox */
   /* The slider */
   /* Rounded sliders */
 }
 
-.toggleFlag .switch, body .card-list .switch, body .modal-body .switch {
+.toggleFlag .switch, body .container-page .switch, body .modal-body .switch {
   position: relative;
   display: inline-block;
   width: 60px;
   height: 34px;
 }
 
-.toggleFlag .switch input, body .card-list .switch input, body .modal-body .switch input {
+.toggleFlag .switch input, body .container-page .switch input, body .modal-body .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.toggleFlag .slider, body .card-list .slider, body .modal-body .slider {
+.toggleFlag .slider, body .container-page .slider, body .modal-body .slider {
   position: absolute;
   cursor: pointer;
   top: 0;
@@ -29,7 +29,7 @@
   transition: .4s;
 }
 
-.toggleFlag .slider:before, body .card-list .slider:before, body .modal-body .slider:before {
+.toggleFlag .slider:before, body .container-page .slider:before, body .modal-body .slider:before {
   position: absolute;
   content: "";
   height: 26px;
@@ -41,30 +41,56 @@
   transition: .4s;
 }
 
-.toggleFlag input:checked + .slider, body .card-list input:checked + .slider, body .modal-body input:checked + .slider {
+.toggleFlag input:checked + .slider, body .container-page input:checked + .slider, body .modal-body input:checked + .slider {
   background-color: #2196F3;
 }
 
-.toggleFlag input:focus + .slider, body .card-list input:focus + .slider, body .modal-body input:focus + .slider {
+.toggleFlag input:focus + .slider, body .container-page input:focus + .slider, body .modal-body input:focus + .slider {
   -webkit-box-shadow: 0 0 1px #2196F3;
           box-shadow: 0 0 1px #2196F3;
 }
 
-.toggleFlag input:checked + .slider:before, body .card-list input:checked + .slider:before, body .modal-body input:checked + .slider:before {
+.toggleFlag input:checked + .slider:before, body .container-page input:checked + .slider:before, body .modal-body input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   transform: translateX(26px);
 }
 
-.toggleFlag .slider.round, body .card-list .slider.round, body .modal-body .slider.round {
+.toggleFlag .slider.round, body .container-page .slider.round, body .modal-body .slider.round {
   border-radius: 34px;
 }
 
-.toggleFlag .slider.round:before, body .card-list .slider.round:before, body .modal-body .slider.round:before {
+.toggleFlag .slider.round:before, body .container-page .slider.round:before, body .modal-body .slider.round:before {
   border-radius: 50%;
 }
 
-body .container .pageIconRow {
-  border-bottom: 1px solid #459636;
+body .container .header-img {
+  background-image: url("./img/background3.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  height: 350px;
+  position: absolute;
+  right: 0;
+  left: 0;
+  text-align: center;
+}
+
+body .container .header-img .header-title {
+  font-family: cursive, Arial, Helvetica, sans-serif;
+  font-size: 100px;
+  margin-top: 80px;
+}
+
+@media only screen and (max-width: 575px) {
+  body .container .header-img .header-title {
+    font-size: 50px;
+    margin-top: 60px;
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  body .container .header-img {
+    height: 200px;
+  }
 }
 
 body .container .pageIconRow .pageIcon {
@@ -74,16 +100,25 @@ body .container .pageIconRow .pageIcon {
 }
 
 body .container .pageIconRow #cryptoniteLogo {
-  width: 80px;
-  height: 80px;
-  margin-left: 880px;
+  width: 50px;
+  height: 50px;
+  margin-top: 5px;
+  margin-right: 5px;
+}
+
+@media only screen and (max-width: 575px) {
+  body .container .pageIconRow {
+    margin-left: 5px;
+  }
 }
 
 body .container .app-header {
   margin-top: 20px;
+  margin-bottom: 10px;
 }
 
-body .container .app-header a {
+body .container .app-header .nav {
+  display: inline-block;
   color: #999;
   margin-right: 20px;
   cursor: pointer;
@@ -92,19 +127,30 @@ body .container .app-header a {
 @media only screen and (max-width: 575px) {
   body .container .app-header {
     text-align: center;
+    width: 300px;
   }
 }
 
-body .card-list {
+body .container-page {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-wrap: wrap;
       flex-wrap: wrap;
-  margin-top: 20px;
+  margin-top: 370px;
 }
 
-body .card-list .card {
+@media only screen and (max-width: 575px) {
+  body .container-page {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    margin-top: 250px;
+  }
+}
+
+body .container-page .card-container .card {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -114,34 +160,38 @@ body .card-list .card {
   -webkit-box-direction: normal;
       -ms-flex-direction: row;
           flex-direction: row;
-  width: 280px;
+  width: 265px;
   margin-right: 20px;
   margin-bottom: 20px;
 }
 
-body .card-list .card .card-body {
+@media only screen and (max-width: 575px) {
+  body .container-page .card-container .card {
+    width: auto;
+    margin-left: 20px;
+  }
+}
+
+body .container-page .card-container .card .card-body {
   width: 70%;
 }
 
-body .card-list .card .card-body .collapse {
+body .container-page .card-container .card .card-body .card-title,
+body .container-page .card-container .card .card-body .card-subtitle {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+body .container-page .card-container .card .card-body .collapse {
   margin-top: 10px;
   width: 200px;
 }
 
-body .card-list .card .toggle-card {
+body .container-page .card-container .card .toggle-card {
   width: 30%;
   text-align: center;
   margin-top: 20px;
-}
-
-@media only screen and (max-width: 575px) {
-  body .card-list {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    margin: 20px auto;
-  }
 }
 
 body .progress {

@@ -2,59 +2,104 @@
 @import "toggle.scss";
 body {
     .container {
+        .header-img {
+            background-image: url("./img/background3.jpg");
+            background-attachment: fixed;
+            background-repeat: no-repeat; //background-position: center;
+            height: 350px;
+            position: absolute;
+            right: 0;
+            left: 0;
+            text-align: center;
+            .header-title {
+                font-family: cursive, Arial, Helvetica, sans-serif;
+                font-size: 100px;
+                margin-top: 80px;
+
+                @media only screen and (max-width: 575px) {
+                    font-size: 50px;
+                    margin-top: 60px;
+                }
+            }
+
+            @media only screen and (max-width: 575px) {
+                height: 200px;
+            }
+        } 
         .pageIconRow {
-            border-bottom: 1px solid $colorIcon;
             .pageIcon {
                 font-size: 40px;
                 font-family: cursive, Arial, Helvetica, sans-serif;
                 color: $colorIcon;
             }
             #cryptoniteLogo {
-                width: 80px;
-                height: 80px;
-                margin-left: 880px;
+                width: 50px;
+                height: 50px;
+                margin-top: 5px;
+                margin-right: 5px;
+            }
+            @media only screen and (max-width: 575px) {
+                margin-left: 5px;
             }
         }
         .app-header {
             margin-top: $margin20;
-            a {
+            margin-bottom: 10px;
+            .nav {
+                display: inline-block;
                 color: $colorNav;
                 margin-right: $margin20;
-                cursor: pointer;
+                cursor: pointer; 
             }
             @media only screen and (max-width: 575px) {
                 text-align: center;
+                //margin-left: 5px;
+                width: 300px;
             }
         }
     }
-    .card-list {
+    .container-page {
         display: flex;
         flex-wrap: wrap;
-        margin-top: $margin20;
+        margin-top: $margin20+350px;
         @extend .toggleFlag;
-        .card {
-            display: flex;
-            flex-wrap: wrap;
-            flex-direction: row;
-            width: 280px;
-            margin-right: $margin20;
-            margin-bottom: $margin20;
-            .card-body {
-                width: 70%;
-                .collapse {
-                    margin-top: 10px;
-                    width: 200px;
-                }
-            }
-            .toggle-card {
-                width: 30%;
-                text-align: center;
-                margin-top: $margin20;
-            }
-        }
         @media only screen and (max-width: 575px) {
             flex-direction: column; // text-align: center;
-            margin: 20px auto;
+            margin-top: 250px;
+        }
+        .card-container {
+            .card {
+                display: flex;
+                flex-wrap: wrap;
+                flex-direction: row;
+                width: 265px;
+                margin-right: $margin20;
+                margin-bottom: $margin20;
+
+                @media only screen and (max-width: 575px) {
+                    width: auto;
+                    margin-left: 20px;
+                }
+
+                .card-body {
+                    width: 70%;
+                    .card-title,
+                    .card-subtitle {
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .collapse {
+                        margin-top: 10px;
+                        width: 200px;
+                    }
+                }
+                .toggle-card {
+                    width: 30%;
+                    text-align: center;
+                    margin-top: $margin20;
+                }
+            }
         }
     }
     .progress {
@@ -62,7 +107,6 @@ body {
     }
     .modal-body {
         @extend .toggleFlag;
-
         .line-item {
             display: flex;
             flex-wrap: wrap;

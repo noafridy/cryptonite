@@ -1,5 +1,6 @@
 let objCrypto = {};
 let favoritesCoin = [];
+let cryptoData = {};
 
 function backup() {
     if (localStorage.getItem("objCrypto") !== null) {
@@ -12,8 +13,24 @@ function saveObjCrypto() {
 }
 
 function toggleOff(event) {
-    $(event.target).prop('checked',false)
+    $(event.target).prop('checked', false);
 }
+ 
+
+// search button
+$("#search-btn").on("click", () => {
+    const searchInput = $("#search").val();
+    // 1. filter cryptoData to show coins that match search input
+    $(".container-page").empty();
+    cryptoData.map((item, key) => {
+        if (Object.values(item).join().indexOf(searchInput) !== -1) {
+            // 2. update relevant dom elements
+            coinView(cryptoData[key]);
+        }
+    });
+    $("#search").val("");
+    domFavorits();
+});
 
 $(document).ready(() => {
     backup();
@@ -26,69 +43,91 @@ $(document).ready(() => {
         }
     })
 
+    /********************* nav *******************/
     $(".nav-about").on("click", () => {
-        console.log("about"); //for check
+        
         updateProgressBar("100");
         $.ajax({
             type: "get",
             url: "about.html",
             success: (response) => {
                 setTimeout(() => { updateProgressBar("0") }, 500);
-                $(".card-list").empty();
-                $(".card-list").append(response);
+                $(".container-page").empty();
+                $(".container-page").append(response);
             },
             error: (error) => {
                 alert("The page does not exist");
                 console.log(JSON.stringify(error.status));
             }
         });
-    })
+    });
+
+    $(".nav-live-reports").on("click", () => {
+       
+        updateProgressBar("100");
+        $.ajax({
+            type: "get",
+            url: "reports.html",
+            success: (response) => {
+                setTimeout(() => { updateProgressBar("0") }, 500);
+                $(".container-page").empty();
+                $(".container-page").append(response);
+            },
+            error: (error) => {
+                alert("The page does not exist");
+                console.log(JSON.stringify(error.status));
+            }
+        });
+    });
 
     $(".nav-home").on("click", () => {
-        console.log("about"); //for check
+        
         updateProgressBar("100");
         $.ajax({
             type: "get",
             url: "index.html",
-            success: (response) => {
-                console.log(response);
+            success: () => {
+ 
                 setTimeout(() => { updateProgressBar("0") }, 500);
-                $(".card-list").empty();
-                $(".card-list").append(coinList());
+                $(".container-page").empty();
+                $(".container-page").append(coinList());
             },
             error: (error) => {
                 alert("The page does not exist");
                 console.log(JSON.stringify(error.status));
             }
         });
-    })
+    });
+//************* end nav *******************/
 
-    $("body").on("click", ".modal-content .save-changes", (event) => {
-        const toggleList = $('.modal-body input[type="checkbox"]').filter((key,value) => {
-            return ($(value).prop('checked') === false);
+    $("body").on("click", ".modal-content .save-changes", () => {
+        const toggleList = $('.modal-body input[type="checkbox"]').filter((i, domElm) => {
+            return ($(domElm).prop('checked') === false);
         });
-
-        for(let index = 0; index < toggleList.length; index++ ) {
+        for (let index = 0; index < toggleList.length; index++) {
             // 1. update toggle array
             const coinId = toggleList[index].dataset.id;
             const i = favoritesCoin.indexOf(coinId);
             favoritesCoin.splice(i, 1);
             // 2. update dom toggles
-            $(`.card-list .toggle-card input[type="checkbox"][data-id="${coinId}"]`).prop('checked',false);
+            $(`.container-page .toggle-card input[type="checkbox"][data-id="${coinId}"]`).prop('checked', false);
             // 3. close modal
             $('#favoritModal').modal('hide');
-
         }
-
     });
 
-    $("body").on("click", ".card-list input[type='checkbox']", (event) => {
+    $("body").on("click", ".container-page input[type='checkbox']", (event) => {
         let Checkbox = event.target;
         const coinId = Checkbox.dataset.id;
         const isModalOpen = $('#favoritModal').hasClass('show');
 
         // if the number of favorite coins is  < 5
         // add coin id to favorite.
+        if (!$(event.target).prop('checked')) {
+           let index = favoritesCoin.indexOf(coinId);
+           favoritesCoin.splice(index,1);
+           return;
+        }
         if (favoritesCoin.length < 5) {
             favoritesCoin.push(coinId);
         } else {
@@ -98,7 +137,7 @@ $(document).ready(() => {
             // append all coins & toggles to modal
             $('.modal-body').html(
                 favoritesCoin.map(item => {
-                    return(
+                    return (
                         `<div class="line-item">
                             <div>${item}</div>
                             <div class="toggle-card">
@@ -130,6 +169,13 @@ function updateProgressBar(widthBar) {
     $bar.css("width", `${widthBar}%`);
 }
 
+function domFavorits(){
+for (let i = 0; i < favoritesCoin.length; i++) {
+    let coinId = favoritesCoin[i];
+    $(`.container-page .toggle-card input[type="checkbox"][data-id="${coinId}"]`).prop('checked', true);
+}
+}
+
 function coinList() {
     updateProgressBar("100");
     $.ajax({
@@ -137,11 +183,17 @@ function coinList() {
         url: "https://api.coingecko.com/api/v3/coins/list",
         success: (response) => {
             setTimeout(() => { updateProgressBar("0") }, 500);
-            const cryptoData = response.slice(0, 10);
-            console.log(response.slice(0, 10)); //for check
-            for (let i = 0; i < 10; i++) {
+            cryptoData = response.slice(0, 100);
+
+            $(".container-page").empty();
+            for (let i = 0; i < 100; i++) {
                 coinView(cryptoData[i]);
             }
+            domFavorits();
+            // for (let i = 0; i < favoritesCoin.length; i++) {
+            //     let coinId = favoritesCoin[i];
+            //     $(`.container-page .toggle-card input[type="checkbox"][data-id="${coinId}"]`).prop('checked', true);
+            // }
         },
         error: (error) => {
             console.log(JSON.stringify(error.status));
@@ -150,7 +202,7 @@ function coinList() {
 }
 
 function coinView(cryptoData) {
-    $(".card-list").append(`<div class="col"> 
+    $(".container-page").append(`<div class="card-container"> 
             <div class="card">
             <div class="card-body">
             <h5 class="card-title">${cryptoData.symbol}</h5>
@@ -230,8 +282,6 @@ function showMoreInfo(coinId) {
     <div> ${((objCrypto[coinId].currentEur).toFixed(5))}€ </div><br/> 
     <div> ${((objCrypto[coinId].currentIls).toFixed(5))}₪ </div>`);
 }
-// function graphFavoritesCoin(coinId){
 
-// }
 
 
