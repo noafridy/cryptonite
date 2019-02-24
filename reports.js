@@ -75,10 +75,6 @@ function createOptionsData(coinIds) {
 }
 
 // function to bring data each 2 seconds
-
-
-
-
 function getRealTimeData2Sec(coinIds) {
     getRealTimeData(coinIds);
     interavalPointer = setInterval(() => {

@@ -1,3 +1,9 @@
+.aboutTitleFlag, body .container-about .aboutMe .about-data .about-me-data .about-title, body .container-about .aboutMe .about-data .project-description .description-title {
+  color: #85a6c7;
+  margin-top: 20px;
+  font-family: cursive, Arial, Helvetica, sans-serif;
+}
+
 body .container-about {
   background-color: #f7f8fd;
   display: -webkit-box;
@@ -7,6 +13,7 @@ body .container-about {
   -webkit-box-direction: normal;
       -ms-flex-flow: row;
           flex-flow: row;
+  border-radius: 5px;
 }
 
 body .container-about .aboutMe .col-img {
@@ -15,17 +22,5 @@ body .container-about .aboutMe .col-img {
 
 body .container-about .aboutMe .col-img img {
   width: 100%;
-}
-
-body .container-about .aboutMe .about-data .about-me-data .about-title {
-  color: #85a6c7;
-  margin-top: 20px;
-  font-family: cursive, Arial, Helvetica, sans-serif;
-}
-
-body .container-about .aboutMe .about-data .project-description .description-title {
-  color: #85a6c7;
-  margin-top: 20px;
-  font-family: cursive, Arial, Helvetica, sans-serif;
 }
 /*# sourceMappingURL=about.css.map */

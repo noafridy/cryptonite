@@ -1,16 +1,15 @@
 $colorNav: #999;
-//$colorIcon2 : #0070ff;
 $colorIcon: #459636;
-$margin20: 20px;
-$borderRadius: 5px;
-// .formFlag {
-//     background-color: $backgroundColor;
-//     justify-content: center;
-// }
+$aboutBackgroundColor: #f7f8fd;
 
-//about
-// .h3flag{
-//     margin-top: $margin20;
-//     font-family: cursive, Arial, Helvetica, sans-serif;
-//     color: $colorIcon;
-//    }
+$margin20: 20px;
+$margin5: 5px;
+$borderRadius: 5px;
+
+$titleFontFamily: cursive, Arial, Helvetica, sans-serif;
+
+.aboutTitleFlag {
+    color: #85a6c7;
+    margin-top: 20px;
+    font-family: $titleFontFamily;
+}

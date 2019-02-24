@@ -1,3 +1,9 @@
+.aboutTitleFlag {
+  color: #85a6c7;
+  margin-top: 20px;
+  font-family: cursive, Arial, Helvetica, sans-serif;
+}
+
 .toggleFlag, body .container-page, body .modal-body {
   /* Hide default HTML checkbox */
   /* The slider */
@@ -186,6 +192,21 @@ body .container-page .card-container .card .card-body .card-subtitle {
 body .container-page .card-container .card .card-body .collapse {
   margin-top: 10px;
   width: 200px;
+}
+
+body .container-page .card-container .card .card-body .collapse .more-info-collapse {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row;
+          flex-flow: row;
+}
+
+body .container-page .card-container .card .card-body .collapse .more-info-collapse img {
+  height: 50px;
+  margin-right: 20px;
 }
 
 body .container-page .card-container .card .toggle-card {

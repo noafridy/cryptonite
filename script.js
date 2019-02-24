@@ -23,8 +23,9 @@ $("#search-btn").on("click", () => {
     // 1. filter cryptoData to show coins that match search input
     $(".container-page").empty();
     cryptoData.map((item, key) => {
-        if (Object.values(item).join().indexOf(searchInput) !== -1) {
-            // 2. update relevant dom elements
+        if (item.symbol === searchInput) {
+        // if (Object.values(item).join().indexOf(searchInput) !== -1) {
+        //     // 2. update relevant dom elements
             coinView(cryptoData[key]);
         }
     });
@@ -183,10 +184,10 @@ function coinList() {
         url: "https://api.coingecko.com/api/v3/coins/list",
         success: (response) => {
             setTimeout(() => { updateProgressBar("0") }, 500);
-            cryptoData = response.slice(0, 100);
+            cryptoData = response;  //.slice(0, 100);
 
             $(".container-page").empty();
-            for (let i = 0; i < 100; i++) {
+            for (let i = 0; i < cryptoData.length; i++) {
                 coinView(cryptoData[i]);
             }
             domFavorits();
@@ -277,10 +278,13 @@ function callAjax(coinId) {
 }
 
 function showMoreInfo(coinId) {
-    $(`#crypto_${coinId}`).html(`<img src=${objCrypto[coinId].image}/> <br/> 
-    <div> ${((objCrypto[coinId].currentUsd).toFixed(5))}$ </div><br/> 
-    <div> ${((objCrypto[coinId].currentEur).toFixed(5))}€ </div><br/> 
-    <div> ${((objCrypto[coinId].currentIls).toFixed(5))}₪ </div>`);
+    $(`#crypto_${coinId}`).html(`<div class="more-info-collapse"><img src=${objCrypto[coinId].image}/>
+        <div class="info-current">
+            <div>USD: ${((objCrypto[coinId].currentUsd).toFixed(5))}$ </div> 
+            <div>EUR: ${((objCrypto[coinId].currentEur).toFixed(5))}€ </div>
+            <div>ILS: ${((objCrypto[coinId].currentIls).toFixed(5))}₪ </div>
+        </div>
+    </div>`);
 }
 
 

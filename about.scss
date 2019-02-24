@@ -1,9 +1,10 @@
 @import "const.scss";
 body {
     .container-about {
-        background-color: #f7f8fd;
+        background-color:$aboutBackgroundColor;
         display: flex;
         flex-flow: row;
+        border-radius: $borderRadius;
         .aboutMe {
             .col-img {
                 padding-left: 0;
@@ -15,16 +16,12 @@ body {
             .about-data {
                 .about-me-data {
                     .about-title {
-                        color: #85a6c7;
-                        margin-top: 20px;
-                        font-family: cursive, Arial, Helvetica, sans-serif;
+                        @extend .aboutTitleFlag; 
                     }
                 }
                 .project-description {
                     .description-title {
-                        color: #85a6c7;
-                        margin-top: 20px;
-                        font-family: cursive, Arial, Helvetica, sans-serif;
+                        @extend .aboutTitleFlag; 
                     }
                 }
             }

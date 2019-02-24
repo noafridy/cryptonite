@@ -5,41 +5,39 @@ body {
         .header-img {
             background-image: url("./img/background3.jpg");
             background-attachment: fixed;
-            background-repeat: no-repeat; //background-position: center;
+            background-repeat: no-repeat; 
             height: 350px;
             position: absolute;
             right: 0;
             left: 0;
             text-align: center;
             .header-title {
-                font-family: cursive, Arial, Helvetica, sans-serif;
+                font-family: $titleFontFamily;
                 font-size: 100px;
                 margin-top: 80px;
-
                 @media only screen and (max-width: 575px) {
                     font-size: 50px;
                     margin-top: 60px;
                 }
             }
-
             @media only screen and (max-width: 575px) {
                 height: 200px;
             }
-        } 
+        }
         .pageIconRow {
             .pageIcon {
                 font-size: 40px;
-                font-family: cursive, Arial, Helvetica, sans-serif;
+                font-family: $titleFontFamily;
                 color: $colorIcon;
             }
             #cryptoniteLogo {
                 width: 50px;
                 height: 50px;
-                margin-top: 5px;
-                margin-right: 5px;
+                margin-top: $margin5;
+                margin-right: $margin5;
             }
             @media only screen and (max-width: 575px) {
-                margin-left: 5px;
+                margin-left: $margin5;
             }
         }
         .app-header {
@@ -49,11 +47,10 @@ body {
                 display: inline-block;
                 color: $colorNav;
                 margin-right: $margin20;
-                cursor: pointer; 
+                cursor: pointer;
             }
             @media only screen and (max-width: 575px) {
-                text-align: center;
-                //margin-left: 5px;
+                text-align: center; //margin-left: 5px;
                 width: 300px;
             }
         }
@@ -75,12 +72,10 @@ body {
                 width: 265px;
                 margin-right: $margin20;
                 margin-bottom: $margin20;
-
                 @media only screen and (max-width: 575px) {
                     width: auto;
-                    margin-left: 20px;
+                    margin-left: $margin20;
                 }
-
                 .card-body {
                     width: 70%;
                     .card-title,
@@ -92,6 +87,14 @@ body {
                     .collapse {
                         margin-top: 10px;
                         width: 200px;
+                        .more-info-collapse {
+                            display: flex;
+                            flex-flow: row;
+                            img {
+                                height: 50px;
+                                margin-right: $margin20;
+                            }
+                        }
                     }
                 }
                 .toggle-card {
